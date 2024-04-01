@@ -1,4 +1,14 @@
-<?php include_once "headeruser.php"; ?>
+<?php 
+include_once "headeruser.php"; 
+include_once "connectdb.php";
+?>
+
+<?php
+//categories 
+$categories = $pdo->query("SELECT * FROM tbl_category");
+$categories->execute();
+$allcategories = $categories->fetchAll(PDO::FETCH_OBJ);
+?>
 
 
         <!-- Hero Start -->
@@ -110,26 +120,13 @@
                                         <span class="text-dark" style="width: 130px;">All Products</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <?php foreach ($allcategories as $category) : ?>
+                                <li class="nav-item">             
                                     <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
-                                        <span class="text-dark" style="width: 130px;">Vegetables</span>
+                                        <span class="text-dark" style="width: 130px;"><?php echo $category->category; ?></span>
                                     </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-3">
-                                        <span class="text-dark" style="width: 130px;">Fruits</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-4">
-                                        <span class="text-dark" style="width: 130px;">Bread</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-5">
-                                        <span class="text-dark" style="width: 130px;">Meat</span>
-                                    </a>
-                                </li>
+                                </li>                   
+                              <?php endforeach ?>
                             </ul>
                         </div>
                     </div>

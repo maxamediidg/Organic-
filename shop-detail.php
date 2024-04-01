@@ -1,5 +1,14 @@
-<?php include_once "headeruser.php"; ?>
+<?php 
+include_once "headeruser.php";
+include_once "connectdb.php";
+?>
 
+<?php
+//categories 
+$categories = $pdo->query("SELECT * FROM tbl_category");
+$categories->execute();
+$allcategories = $categories->fetchAll(PDO::FETCH_OBJ);
+?>
 
         <!-- Single Page Header start -->
         <div class="container-fluid page-header py-5">
@@ -209,38 +218,18 @@
                                     <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                                 </div>
                                 <div class="mb-4">
-                                    <h4>Categories</h4>
-                                    <ul class="list-unstyled fruite-categorie">
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
-                                                <span>(3)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
-                                                <span>(5)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
-                                                <span>(2)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
-                                                <span>(8)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
-                                                <span>(5)</span>
-                                            </div>
-                                        </li>
+                                <h4>Categories</h4>
+                                    <?php foreach ($allcategories as $category) : ?>
+                                        <ul class="list-unstyled fruite-categorie">
+                                            <li>
+                                                <div class="d-flex justify-content-between fruite-name">
+                                                    <a href="#"><i class="fas fa-apple-alt me-2"></i><?php echo $category->category; ?></a>
+                                                    <span>(3)</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    <?php endforeach; ?>
+                                        
                                     </ul>
                                 </div>
                             </div>
