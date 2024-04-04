@@ -1,13 +1,20 @@
 <?php 
 include_once "headeruser.php"; 
-include_once "connectdb.php";
-?>
+include_once "../ui/connectdb.php";
 
+?>
 <?php
 //categories 
 $categories = $pdo->query("SELECT * FROM tbl_category");
 $categories->execute();
 $allcategories = $categories->fetchAll(PDO::FETCH_OBJ);
+?>
+
+<?php
+//tbl tax discount 
+$tax = $pdo->query("SELECT * FROM tbl_taxdis where taxdis_id =3");
+$tax->execute();
+$alltax = $tax->fetchAll(PDO::FETCH_OBJ);
 ?>
 
 <?php
@@ -146,15 +153,15 @@ $allproducts = $products->fetchAll(PDO::FETCH_OBJ);
                                         <div class="col-md-6 col-lg-4 col-xl-3">
                                             <div class="rounded position-relative fruite-item">
                                                 <div class="fruite-img">
-                                                    <img src="../ui/productimages/<?php echo $product->image; ?>" class="img-fluid w-100 rounded-top" alt="">
+                                                    <img src="../ui/productimages/<?php echo $product->image; ?>"  class="img-fluid w-100 rounded-top" alt="">
                                                 </div>
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Stock <?php echo $product->stock; ?></div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h4><?php echo $product->product; ?></h4>
                                                     <p><?php echo $product->description; ?></p>
                                                     <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0">$<?php echo $product->saleprice; ?></p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                        <p class="text-dark fs-5 fw-bold mb-0">Price $<?php echo $product->saleprice; ?></p>
+                                                        <a href="shop-detail.php?id=<?php echo $product->pid; ?>" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,12 +214,14 @@ $allproducts = $products->fetchAll(PDO::FETCH_OBJ);
                             <div class="service-item bg-primary rounded border border-primary">
                                 <img src="img/featur-3.jpg" class="img-fluid rounded-top w-100" alt="">
                                 <div class="px-4 rounded-bottom">
+                                <?php foreach ($alltax as $tax) : ?>
                                     <div class="service-content bg-secondary text-center p-4 rounded">
                                         <h5 class="text-white">Exotic Vegitable</h5>
-                                        <h3 class="mb-0">Discount 30$</h3>
+                                        <h3 class="mb-0">Discount <?php echo $tax->discount; ?>$</h3>
                                     </div>
                                 </div>
                             </div>
+                            <?php endforeach; ?>
                         </a>
                     </div>
                 </div>
